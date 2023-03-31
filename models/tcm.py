@@ -150,9 +150,6 @@ class WMSA(nn.Module):
         self.window_size = window_size
         self.type=type
         self.embedding_layer = nn.Linear(self.input_dim, 3*self.input_dim, bias=True)
-
-        # TODO recover
-        # self.relative_position_params = nn.Parameter(torch.zeros(self.n_heads, 2 * window_size - 1, 2 * window_size -1))
         self.relative_position_params = nn.Parameter(torch.zeros((2 * window_size - 1)*(2 * window_size -1), self.n_heads))
 
         self.linear = nn.Linear(self.input_dim, self.output_dim)
@@ -167,7 +164,6 @@ class WMSA(nn.Module):
         Returns:
             attn_mask: should be (1 1 w p p),
         """
-        # supporting sqaure.
         attn_mask = torch.zeros(h, w, p, p, p, p, dtype=torch.bool, device=self.relative_position_params.device)
         if self.type == 'W':
             return attn_mask
@@ -192,17 +188,11 @@ class WMSA(nn.Module):
         x = rearrange(x, 'b (w1 p1) (w2 p2) c -> b w1 w2 p1 p2 c', p1=self.window_size, p2=self.window_size)
         h_windows = x.size(1)
         w_windows = x.size(2)
-        # sqaure validation
-        # assert h_windows == w_windows
-
         x = rearrange(x, 'b w1 w2 p1 p2 c -> b (w1 w2) (p1 p2) c', p1=self.window_size, p2=self.window_size)
         qkv = self.embedding_layer(x)
         q, k, v = rearrange(qkv, 'b nw np (threeh c) -> threeh b nw np c', c=self.head_dim).chunk(3, dim=0)
         sim = torch.einsum('hbwpc,hbwqc->hbwpq', q, k) * self.scale
-        # Adding learnable relative embedding
-
         sim = sim + rearrange(self.relative_embedding(), 'h p q -> h 1 1 p q')
-        # Using Attn Mask to distinguish different subwindows.
         if self.type != 'W':
             attn_mask = self.generate_mask(h_windows, w_windows, self.window_size, shift=self.window_size//2)
             sim = sim.masked_fill_(attn_mask, float("-inf"))
@@ -219,7 +209,6 @@ class WMSA(nn.Module):
     def relative_embedding(self):
         cord = torch.tensor(np.array([[i, j] for i in range(self.window_size) for j in range(self.window_size)]))
         relation = cord[:, None, :] - cord[None, :, :] + self.window_size -1
-        # negative is allowed
         return self.relative_position_params[:, relation[:,:,0].long(), relation[:,:,1].long()]
 
 class Block(nn.Module):
@@ -231,9 +220,6 @@ class Block(nn.Module):
         self.output_dim = output_dim
         assert type in ['W', 'SW']
         self.type = type
-        # if input_resolution <= window_size:
-        #     self.type = 'W'
-
         print("Block Initial Type: {}, drop_path_rate:{:.6f}".format(self.type, drop_path))
         self.ln1 = nn.LayerNorm(input_dim)
         self.msa = WMSA(input_dim, input_dim, head_dim, window_size, self.type)
@@ -434,21 +420,13 @@ class TCM(CompressionModel):
         self.entropy_bottleneck = EntropyBottleneck(192)
         self.gaussian_conditional = GaussianConditional(None)
 
-    def load_state_dict(self, state_dict):
-        update_registered_buffers(
-            self.gaussian_conditional,
-            "gaussian_conditional",
-            ["_quantized_cdf", "_offset", "_cdf_length", "scale_table"],
-            state_dict,
-        )
-        super().load_state_dict(state_dict)
-        
     def update(self, scale_table=None, force=False):
         if scale_table is None:
             scale_table = get_scale_table()
         updated = self.gaussian_conditional.update_scale_table(scale_table, force=force)
         updated |= super().update(force=force)
         return updated
+    
     def forward(self, x):
         y = self.g_a(x)
         y_shape = y.shape[2:]
