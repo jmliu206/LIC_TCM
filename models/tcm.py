@@ -121,7 +121,7 @@ def update_registered_buffers(
         _update_registered_buffer(
             module,
             buffer_name,
-            f"{module_name}.{buffer_name}",     # 修改了
+            f"{module_name}.{buffer_name}", 
             state_dict,
             policy,
             dtype,
