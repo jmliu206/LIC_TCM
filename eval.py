@@ -95,7 +95,6 @@ def main(argv):
     if args.checkpoint:  # load from previous checkpoint
         print("Loading", args.checkpoint)
         checkpoint = torch.load(args.checkpoint, map_location=device)
-        print(checkpoint["state_dict"].keys())
         for k, v in checkpoint["state_dict"].items():
             dictory[k.replace("module.", "")] = v
         net.load_state_dict(dictory)
@@ -119,9 +118,9 @@ def main(argv):
                 total_time += (e - s)
                 out_dec["x_hat"] = crop(out_dec["x_hat"], padding)
                 num_pixels = x.size(0) * x.size(2) * x.size(3)
-                print("Bitrate: ", sum(len(s[0]) for s in out_enc["strings"]) * 8.0 / num_pixels)
-                print("MS-SSIm: ", compute_msssim(x, out_dec["x_hat"]))
-                print("PSNR: ", compute_psnr(x, out_dec["x_hat"]))
+                print(f'Bitrate: {(sum(len(s[0]) for s in out_enc["strings"]) * 8.0 / num_pixels):.3f}bpp')
+                print(f'MS-SSIM: {compute_msssim(x, out_dec["x_hat"]):.2f}dB')
+                print(f'PSNR: {compute_psnr(x, out_dec["x_hat"]):.2f}dB')
                 Bit_rate += sum(len(s[0]) for s in out_enc["strings"]) * 8.0 / num_pixels
                 PSNR += compute_psnr(x, out_dec["x_hat"])
                 MS_SSIM += compute_msssim(x, out_dec["x_hat"])
@@ -145,7 +144,8 @@ def main(argv):
                 out_net['x_hat'].clamp_(0, 1)
                 out_net["x_hat"] = crop(out_net["x_hat"], padding)
                 print(f'PSNR: {compute_psnr(x, out_net["x_hat"]):.2f}dB')
-                print(f'Bit-rate: {compute_bpp(out_net):.3f} bpp')
+                print(f'MS-SSIM: {compute_msssim(x, out_net["x_hat"]):.2f}dB')
+                print(f'Bit-rate: {compute_bpp(out_net):.3f}bpp')
                 PSNR += compute_psnr(x, out_net["x_hat"])
                 MS_SSIM += compute_msssim(x, out_net["x_hat"])
                 Bit_rate += compute_bpp(out_net)
