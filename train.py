@@ -378,9 +378,9 @@ def main(argv):
     if args.checkpoint:  # load from previous checkpoint
         print("Loading", args.checkpoint)
         checkpoint = torch.load(args.checkpoint, map_location=device)
-        last_epoch = checkpoint["epoch"] + 1
         net.load_state_dict(checkpoint["state_dict"])
         if args.continue_train:
+            last_epoch = checkpoint["epoch"] + 1
             optimizer.load_state_dict(checkpoint["optimizer"])
             aux_optimizer.load_state_dict(checkpoint["aux_optimizer"])
             lr_scheduler.load_state_dict(checkpoint["lr_scheduler"])
