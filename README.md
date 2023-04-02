@@ -32,6 +32,10 @@ CUDA_VISIBLE_DEVICES='0' python -u ./train.py -d [path of training dataset] \
 python eval.py --checkpoint [path of the pretrained checkpoint] --data [path of testing dataset] --cuda
 ```
 
+## Pretrained Model
+| Lambda | Metric | Link |
+|--------|--------|------|
+| 0.05   | MSE    |   [link](https://drive.google.com/file/d/1TK-CPiD2QwtWJqZoT_OyCtnxdQ7UNP56/view?usp=share_link)   |
 
 
 ## Reconstructed Samples
