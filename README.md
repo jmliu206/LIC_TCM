@@ -42,6 +42,19 @@ python eval.py --checkpoint [path of the pretrained checkpoint] --data [path of 
 ## Reconstructed Samples
 <img src="./assets/visual.png"  style="zoom: 33%;" />
 
+## Related Works
+https://github.com/ZhengxueCheng/Learned-Image-Compression-with-GMM-and-Attention
+
+https://github.com/Googolxx/STF
+
+https://github.com/Nikolai10/SwinT-ChARM
+
+Noted that when our work was completed, the SwinT-ChARM did not yet have the open source code. Therefore, we use our own reproduced results in the paper. For the entropy model in the reproduced code, we use a similar setup of convolutional layers in this code.
+
+
+
+## Notes
+This implementations are not original codes of our CVPR2023 paper, because are rearranged by us. This repo is a re-implementation, but the core codes are almost the same and results are also consistent with original results. 
 
 ## Citation
 ```
