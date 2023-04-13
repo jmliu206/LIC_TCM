@@ -20,6 +20,7 @@ RD curves on Kodak.
 <img src="./assets/res.png"  style="zoom: 33%;" />
 
 ## Training
+In the code, N refers to 1/2 of C in the paper, as it represents the number of channels used to be input into the Tensformer and CNN networks respectively. Therefore, for the Small/Middle/Large model, N should be set as 64/96/128.
 ``` 
 CUDA_VISIBLE_DEVICES='0' python -u ./train.py -d [path of training dataset] \
     --cuda --N 128 --lambda 0.05 --epochs 50 --lr_epoch 45 48 \
