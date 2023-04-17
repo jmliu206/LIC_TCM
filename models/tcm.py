@@ -323,16 +323,13 @@ class TCM(CompressionModel):
         self.m_down1 = [ConvTransBlock(dim, dim, self.head_dim[0], self.window_size, dpr[i+begin], 'W' if not i%2 else 'SW') 
                       for i in range(config[0])] + \
                       [ResidualBlockWithStride(2*N, 2*N, stride=2)]
-        begin += config[0]
         self.m_down2 = [ConvTransBlock(dim, dim, self.head_dim[1], self.window_size, dpr[i+begin], 'W' if not i%2 else 'SW')
                       for i in range(config[1])] + \
                       [ResidualBlockWithStride(2*N, 2*N, stride=2)]
-        begin += config[1]
         self.m_down3 = [ConvTransBlock(dim, dim, self.head_dim[2], self.window_size, dpr[i+begin], 'W' if not i%2 else 'SW')
                       for i in range(config[2])] + \
                       [conv3x3(2*N, M, stride=2)]
 
-        begin += config[2]
         self.m_up1 = [ConvTransBlock(dim, dim, self.head_dim[3], self.window_size, dpr[i+begin], 'W' if not i%2 else 'SW') 
                       for i in range(config[3])] + \
                       [ResidualBlockUpsample(2*N, 2*N, 2)]
