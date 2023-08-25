@@ -36,9 +36,15 @@ python eval.py --checkpoint [path of the pretrained checkpoint] --data [path of 
 ```
 
 ## Pretrained Model
-| Lambda | Metric | Link |
-|--------|--------|------|
-| 0.05   | MSE    |   [link](https://drive.google.com/file/d/1TK-CPiD2QwtWJqZoT_OyCtnxdQ7UNP56/view?usp=share_link)   |
+| N | Lambda | Metric | Link |
+|--------|--------|--------|------|
+| 128 | 0.05   | MSE    |   [link](https://drive.google.com/file/d/1TK-CPiD2QwtWJqZoT_OyCtnxdQ7UNP56/view?usp=share_link)   |
+| 64 | 0.05   | MSE    |   [link](https://drive.google.com/file/d/1Quz6_jGJyaG6LMUbT4JuOhhQWxJN26Kh/view?usp=drive_link) |
+| 64 | 0.025   | MSE    |   [link](https://drive.google.com/file/d/1rc4E2Rke1Jd8UnLq73NaXbfAdcBGGPKg/view?usp=drive_link) |
+| 64 | 0.013   | MSE    |   [link](https://drive.google.com/file/d/1UbfQFsrr-Z6SrvZvpX4p1QPta5FCORZ5/view?usp=drive_link) |
+| 64 | 0.0067   | MSE    |   [link](https://drive.google.com/file/d/17THA1IiPStSO6jG4h5clwkw0ySzgLZID/view?usp=drive_link) |
+| 64 | 0.0035   | MSE    |   [link](https://drive.google.com/file/d/1x2rfIQAv8RsjM3zEByDdOZJtEcPU5XZT/view?usp=drive_link) |
+| 64 | 0.0025   | MSE    |   [link](https://drive.google.com/file/d/1zpkW_MCkUWl8nRUlza0L7Fk7dXlXciZd/view?usp=drive_link) |
 
 
 ## Reconstructed Samples
