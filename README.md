@@ -1,8 +1,10 @@
 # Learned Image Compression with Mixed Transformer-CNN Architectures [CVPR23 Highlight]
 
-This is the repository of the paper "[Learned Image Compression with Mixed Transformer-CNN Architectures](https://arxiv.org/abs/2303.14978)".
+This is the Pytorch repository of the paper "[Learned Image Compression with Mixed Transformer-CNN Architectures](https://arxiv.org/abs/2303.14978)".
 
 Please feel free to contact Jinming Liu (jmliu@toki.waseda.jp) or [Heming Sun](https://researchmap.jp/heming/?lang=en) if you have any questions.
+
+A TensorFlow2 implementation of [LIC-TCM](https://github.com/Nikolai10/LIC-TCM) is also provided by [Nikolai10](https://github.com/Nikolai10).
 
 ## Abstract
 Learned image compression (LIC) methods have exhibited promising progress and superior rate-distortion performance compared with classical image compression standards. Most existing LIC methods are Convolutional Neural Networks-based (CNN-based) or Transformer-based, which have different advantages. Exploiting both advantages is a point worth exploring, which has two challenges: 1) how to effectively fuse the two methods? 2) how to achieve higher performance with a suitable complexity? In this paper, we propose an efficient parallel Transformer-CNN Mixture (TCM) block with a controllable complexity to incorporate the local modeling ability of CNN and the non-local modeling ability of transformers to improve the overall architecture of image compression models. Besides, inspired by the recent progress of entropy estimation models and attention modules, we propose a channel-wise entropy model with parameter-efficient swin-transformer-based attention (SWAtten) modules by using channel squeezing. Experimental results demonstrate our proposed method achieves state-of-the-art rate-distortion performances on three different resolution datasets (i.e., Kodak, Tecnick, CLIC Professional Validation) compared to existing LIC methods.
