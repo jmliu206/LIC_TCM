@@ -2,7 +2,7 @@
 
 This is the Pytorch repository of the paper "[Learned Image Compression with Mixed Transformer-CNN Architectures](https://arxiv.org/abs/2303.14978)".
 
-Please feel free to contact Jinming Liu (jmliu@toki.waseda.jp) or [Heming Sun](https://researchmap.jp/heming/?lang=en) if you have any questions.
+Please feel free to contact Jinming Liu (jmliu@toki.waseda.jp) or [Heming Sun](https://sun.ynu.ac.jp/) if you have any questions.
 
 A TensorFlow2 implementation of [LIC-TCM](https://github.com/Nikolai10/LIC-TCM) is also provided by [Nikolai10](https://github.com/Nikolai10).
 
